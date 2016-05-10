@@ -90,7 +90,25 @@ void accessY(Cache l1, Cache l2, int address);
 
 int main(int argc, char* argv[]){
 	ifstream file;
-	file.open(argv[1]);
+	int tempRows = 8;
+	for(int count=1; count<argc; count++){
+		if(argv[count][0] == '-'){
+			switch(argv[count++][1]){
+				case 'F':
+					file.open(argv[count]);
+					break;
+				case 'a':
+					tempRows = atoi(argv[count]);
+					break;
+				default:
+					cout<<"Invalid Command."<<argv[count]<<endl;
+			}
+		}
+		else{
+			cout<<"Invalid Command. Using default Values."<<endl;
+		}
+	}
+
 	counter = 0;
 	Cache* l1 = new Cache(8, 128);
 	Cache* l2 = new Cache(16, 128);

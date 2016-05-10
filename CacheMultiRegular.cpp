@@ -111,9 +111,28 @@ void accessY(Cache* l1, int currCore, Cache l2, int address);
 
 int main(int argc, char* argv[]){
 	ifstream file;
-	nCores = atoi(argv[1]);
-	int tempRows = atoi(argv[2]);
-	file.open(argv[3]);
+	int tempRows = 8;
+	for(int count=1; count<argc; count++){
+		if(argv[count][0] == '-'){
+			switch(argv[count++][1]){
+				case 'N':
+					nCores = atoi(argv[count]);
+					break;
+				case 'F':
+					file.open(argv[count]);
+					break;
+				case 'a':
+					tempRows = atoi(argv[count]);
+					break;
+				default:
+					cout<<"Invalid Command."<<argv[count]<<endl;
+			}
+		}
+		else{
+			cout<<"Invalid Command. Using default Values."<<endl;
+		}
+	}
+
 	counter = 0;
 	vector<Cache> l1;
 	l1.reserve(nCores);
